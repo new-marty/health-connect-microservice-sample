@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS sync_tokens;
+DROP TABLE IF EXISTS meals;
+DROP TABLE IF EXISTS vitals;
+DROP TABLE IF EXISTS weight_readings;
+DROP TABLE IF EXISTS body_comp_scans;
+DROP TABLE IF EXISTS workout_sets;
+DROP TABLE IF EXISTS workouts;
+DROP TABLE IF EXISTS activities;
+DROP TABLE IF EXISTS daily_scores;
+DROP TABLE IF EXISTS sleep_sessions;
+DROP TABLE IF EXISTS sync_log;
