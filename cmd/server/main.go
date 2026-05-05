@@ -1,3 +1,14 @@
+// Package main is the health-connect HTTP server.
+//
+// @title           Health Connect API
+// @version         1.0
+// @description     Personal health data API. Aggregates Oura, Strava, Hevy, InBody, Apple Health, and meal logs. Every endpoint is also exposed as an LLM tool — see /openapi.json, /tools/openai.json, /tools/anthropic.json.
+// @BasePath        /api/v1
+//
+// @securityDefinitions.apikey  BearerAuth
+// @in                          header
+// @name                        Authorization
+// @description                 Bearer token. Set the same value in HEALTH_CONNECT_API_TOKEN on the server.
 package main
 
 import (
@@ -21,9 +32,11 @@ import (
 	"github.com/new-marty/health-connect/internal/meals"
 	"github.com/new-marty/health-connect/internal/middleware"
 	"github.com/new-marty/health-connect/internal/oura"
+	"github.com/new-marty/health-connect/internal/spec"
 	"github.com/new-marty/health-connect/internal/strava"
 	"github.com/new-marty/health-connect/internal/summary"
 	syncpkg "github.com/new-marty/health-connect/internal/sync"
+	"github.com/new-marty/health-connect/internal/toolspec"
 )
 
 func main() {
@@ -102,6 +115,13 @@ func main() {
 	summaryHandler := summary.NewHandler(summarySvc)
 	analysisHandler := analysis.NewHandler(analysisSvc)
 
+	// Pre-convert tool schemas at startup so /tools/* serve cached bytes.
+	openaiTools, anthropicTools, err := toolspec.Convert(spec.Swagger)
+	if err != nil {
+		slog.Error("failed to convert openapi spec to tool schemas", "error", err)
+		os.Exit(1)
+	}
+
 	// Setup router
 	r := gin.New()
 	r.Use(middleware.RequestID())
@@ -109,11 +129,15 @@ func main() {
 	r.Use(middleware.CORS(origins))
 	r.Use(gin.Recovery())
 
-	// Health check
+	// Public routes
 	r.GET("/api/health", healthCheck(db))
+	r.GET("/openapi.json", serveBytes("application/json", spec.Swagger))
+	r.GET("/tools/openai.json", serveBytes("application/json", openaiTools))
+	r.GET("/tools/anthropic.json", serveBytes("application/json", anthropicTools))
 
-	// API v1 routes
+	// API v1 routes (auth-gated when HEALTH_CONNECT_API_TOKEN is set)
 	api := r.Group("/api/v1")
+	api.Use(middleware.BearerAuth())
 	api.Use(middleware.Timeout(30 * time.Second))
 
 	ouraHandler.RegisterRoutes(api)
@@ -171,5 +195,11 @@ func healthCheck(db *sql.DB) gin.HandlerFunc {
 			"status":   "ok",
 			"database": "connected",
 		})
+	}
+}
+
+func serveBytes(contentType string, body []byte) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Data(http.StatusOK, contentType, body)
 	}
 }

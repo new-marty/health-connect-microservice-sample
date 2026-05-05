@@ -6,7 +6,7 @@ Go microservice backend for personal health data. Collects from Oura Ring, Strav
 
 ```bash
 cp .env.example .env   # Fill in API credentials
-make run               # go run ./cmd/server
+just run               # go run ./cmd/server
 ```
 
 ## API
@@ -27,6 +27,26 @@ All endpoints under `/api/v1/`.
 
 Health check: `GET /api/health`
 
+## AI tool calling
+
+Every API endpoint is also exposed as an LLM-callable tool. The discovery URLs:
+
+| URL | Format |
+|-----|--------|
+| `GET /openapi.json` | OpenAPI / Swagger 2.0 spec (source of truth) |
+| `GET /tools/openai.json` | OpenAI function-calling tool array |
+| `GET /tools/anthropic.json` | Anthropic tool-use tool array |
+
+The schemas are pre-converted at server startup. The LLM picks a tool, then **invokes the existing REST route directly** (each tool description ends with `Invoke: <METHOD> <path>`). No proxy/dispatch endpoint is needed.
+
+Auth: set `HEALTH_CONNECT_API_TOKEN=<your-token>` on the server. Hosted agents (Claude, ChatGPT) pass `Authorization: Bearer <token>`. The CLI reads the same env var and forwards it. If the env var is unset, auth is disabled and a startup warning is logged.
+
+After changing handler annotations, regenerate the spec:
+
+```bash
+just openapi
+```
+
 ## Docker
 
 ```bash
@@ -41,3 +61,5 @@ Source-oriented modules — each data source (oura, strava, hevy, inbody, appleh
 Summary layer reads across all sources (read-only aggregation). AI analysis calls Claude API.
 
 Background sync runs on configurable cron schedules and can be triggered on-demand via `POST /api/v1/sync/:source`.
+
+OpenAPI annotations (swaggo) live on each handler — `just openapi` regenerates `internal/spec/swagger.json`, which is embedded into the binary and served at `/openapi.json`. `internal/toolspec/` converts the spec to OpenAI/Anthropic tool-call shapes at startup.

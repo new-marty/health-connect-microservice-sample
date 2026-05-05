@@ -1,0 +1,1424 @@
+basePath: /api/v1
+definitions:
+  github_com_new-marty_health-connect_internal_apperror.Body:
+    properties:
+      code:
+        $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.ErrorCode'
+      details:
+        additionalProperties:
+          type: string
+        type: object
+      message:
+        type: string
+    type: object
+  github_com_new-marty_health-connect_internal_apperror.ErrorCode:
+    enum:
+    - NOT_FOUND
+    - INVALID_INPUT
+    - INTERNAL_ERROR
+    - TIMEOUT
+    type: string
+    x-enum-varnames:
+    - CodeNotFound
+    - CodeInvalidInput
+    - CodeInternal
+    - CodeTimeout
+  github_com_new-marty_health-connect_internal_apperror.Response:
+    properties:
+      error:
+        $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Body'
+    type: object
+  internal_analysis.AnalysisRequest:
+    properties:
+      date:
+        type: string
+    type: object
+  internal_analysis.AnalysisResponse:
+    properties:
+      analysis:
+        type: string
+      date:
+        type: string
+    type: object
+  internal_applehealth.CreateWeightRequest:
+    properties:
+      bmi:
+        example: 22.1
+        type: number
+      body_fat_pct:
+        example: 18.4
+        type: number
+      date:
+        example: "2026-05-04"
+        type: string
+      lean_mass_kg:
+        example: 58.2
+        type: number
+      source:
+        example: manual
+        type: string
+      weight_kg:
+        example: 72.5
+        type: number
+    required:
+    - weight_kg
+    type: object
+  internal_applehealth.IngestPayload:
+    properties:
+      data:
+        properties:
+          metrics:
+            items:
+              properties:
+                data:
+                  items:
+                    properties:
+                      date:
+                        type: string
+                      qty:
+                        type: number
+                      source:
+                        type: string
+                    type: object
+                  type: array
+                name:
+                  type: string
+                units:
+                  type: string
+              type: object
+            type: array
+        type: object
+    type: object
+  internal_applehealth.Vital:
+    properties:
+      date:
+        type: string
+      id:
+        type: integer
+      metric:
+        type: string
+      source:
+        type: string
+      timestamp:
+        type: string
+      unit:
+        type: string
+      value:
+        type: number
+    type: object
+  internal_applehealth.WeightReading:
+    properties:
+      bmi:
+        type: number
+      body_fat_pct:
+        type: number
+      date:
+        type: string
+      lean_mass_kg:
+        type: number
+      source:
+        type: string
+      timestamp:
+        type: string
+      weight_kg:
+        type: number
+    type: object
+  internal_hevy.Workout:
+    properties:
+      bodyweight_kg:
+        type: number
+      date:
+        type: string
+      id:
+        type: integer
+      notes:
+        type: string
+      session_num:
+        type: integer
+      session_type:
+        type: string
+      sets:
+        items:
+          $ref: '#/definitions/internal_hevy.WorkoutSet'
+        type: array
+      source:
+        type: string
+    type: object
+  internal_hevy.WorkoutSet:
+    properties:
+      exercise_name:
+        type: string
+      id:
+        type: integer
+      notes:
+        type: string
+      reps:
+        type: integer
+      rpe:
+        type: number
+      set_num:
+        type: integer
+      weight_kg:
+        type: number
+      workout_id:
+        type: integer
+    type: object
+  internal_inbody.BodyCompScan:
+    properties:
+      bfm_kg:
+        type: number
+      bmi:
+        type: number
+      bmr_kcal:
+        type: integer
+      date:
+        type: string
+      ecw_kg:
+        type: number
+      ffm_kg:
+        type: number
+      icw_kg:
+        type: number
+      mineral_kg:
+        type: number
+      pbf_pct:
+        type: number
+      protein_kg:
+        type: number
+      scan_datetime:
+        type: string
+      smm_kg:
+        type: number
+      vfl:
+        type: integer
+      weight_kg:
+        type: number
+    type: object
+  internal_meals.CreateMealRequest:
+    properties:
+      calories:
+        example: 650
+        type: integer
+      carbs_g:
+        example: 70
+        type: number
+      date:
+        example: "2026-05-04"
+        type: string
+      description:
+        example: chicken rice bowl with broccoli
+        type: string
+      fat_g:
+        example: 18
+        type: number
+      meal:
+        example: lunch
+        type: string
+      protein_g:
+        example: 45
+        type: number
+      source:
+        example: manual
+        type: string
+    required:
+    - date
+    - description
+    type: object
+  internal_meals.Meal:
+    properties:
+      calories:
+        type: integer
+      carbs_g:
+        type: number
+      date:
+        type: string
+      description:
+        type: string
+      fat_g:
+        type: number
+      id:
+        type: integer
+      meal:
+        type: string
+      protein_g:
+        type: number
+      source:
+        type: string
+    type: object
+  internal_oura.DailyScore:
+    properties:
+      active_cal:
+        type: integer
+      activity_score:
+        description: Activity
+        type: integer
+      breathing_disturbance_idx:
+        type: number
+      day:
+        type: string
+      equivalent_walking_m:
+        type: integer
+      high_activity_sec:
+        type: integer
+      low_activity_sec:
+        type: integer
+      medium_activity_sec:
+        type: integer
+      readiness_activity_balance:
+        type: integer
+      readiness_body_temp:
+        type: integer
+      readiness_hrv_balance:
+        type: integer
+      readiness_prev_day_activity:
+        type: integer
+      readiness_prev_night:
+        type: integer
+      readiness_recovery_index:
+        type: integer
+      readiness_resting_hr:
+        type: integer
+      readiness_score:
+        description: Readiness
+        type: integer
+      readiness_sleep_balance:
+        type: integer
+      readiness_temp_dev:
+        type: number
+      readiness_temp_trend:
+        type: number
+      sedentary_sec:
+        type: integer
+      sleep_deep:
+        type: integer
+      sleep_efficiency:
+        type: integer
+      sleep_latency:
+        type: integer
+      sleep_rem:
+        type: integer
+      sleep_restfulness:
+        type: integer
+      sleep_score:
+        description: Sleep scores
+        type: integer
+      sleep_timing:
+        type: integer
+      sleep_total:
+        type: integer
+      spo2_pct:
+        description: SpO2
+        type: number
+      steps:
+        type: integer
+      total_cal:
+        type: integer
+    type: object
+  internal_oura.SleepSession:
+    properties:
+      avg_breath:
+        type: number
+      avg_hr:
+        type: number
+      avg_hrv:
+        type: integer
+      awake_sec:
+        type: integer
+      bedtime_end:
+        type: string
+      bedtime_start:
+        type: string
+      day:
+        type: string
+      deep_sleep_sec:
+        type: integer
+      efficiency:
+        type: integer
+      latency_sec:
+        type: integer
+      light_sleep_sec:
+        type: integer
+      lowest_hr:
+        type: integer
+      oura_id:
+        type: string
+      rem_sleep_sec:
+        type: integer
+      time_in_bed_sec:
+        type: integer
+      total_sleep_sec:
+        type: integer
+      type:
+        type: string
+    type: object
+  internal_strava.Activity:
+    properties:
+      avg_speed_mps:
+        type: number
+      date:
+        type: string
+      distance_m:
+        type: number
+      elapsed_time_sec:
+        type: integer
+      elevation_gain_m:
+        type: number
+      has_heartrate:
+        type: boolean
+      max_speed_mps:
+        type: number
+      moving_time_sec:
+        type: integer
+      name:
+        type: string
+      sport_type:
+        type: string
+      start_time:
+        type: string
+      strava_id:
+        type: integer
+      type:
+        type: string
+    type: object
+  internal_summary.DailySummary:
+    properties:
+      active_cal:
+        type: integer
+      activity_score:
+        type: integer
+      body_fat_pct:
+        type: number
+      calories_in:
+        type: integer
+      date:
+        type: string
+      deep_sleep_pct:
+        type: number
+      protein_g:
+        type: number
+      readiness_score:
+        type: integer
+      run_distance_km:
+        type: number
+      sleep_efficiency:
+        type: integer
+      sleep_hr:
+        type: number
+      sleep_hrs:
+        type: number
+      sleep_hrv:
+        type: integer
+      sleep_score:
+        type: integer
+      spo2_pct:
+        type: number
+      steps:
+        type: integer
+      total_cal:
+        type: integer
+      weight_kg:
+        type: number
+      workout_count:
+        type: integer
+    type: object
+  internal_summary.ReportData:
+    properties:
+      avg_7d:
+        additionalProperties: true
+        type: object
+      inbody:
+        items:
+          additionalProperties: true
+          type: object
+        type: array
+      lookback:
+        type: integer
+      series:
+        additionalProperties: true
+        type: object
+      target_date:
+        type: string
+      today:
+        additionalProperties: true
+        type: object
+    type: object
+  internal_summary.WeeklyTrend:
+    properties:
+      calories_7d:
+        type: integer
+      calories_in:
+        type: integer
+      date:
+        type: string
+      efficiency_7d:
+        type: integer
+      readiness_7d:
+        type: integer
+      readiness_score:
+        type: integer
+      sleep_7d:
+        type: number
+      sleep_efficiency:
+        type: integer
+      sleep_hrs:
+        type: number
+      steps:
+        type: integer
+      steps_7d:
+        type: integer
+      weight_7d:
+        type: number
+      weight_kg:
+        type: number
+    type: object
+  internal_sync.SyncStatus:
+    properties:
+      last_status:
+        type: string
+      last_sync_at:
+        type: string
+      records_added:
+        type: integer
+      source:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: Personal health data API. Aggregates Oura, Strava, Hevy, InBody, Apple
+    Health, and meal logs. Every endpoint is also exposed as an LLM tool — see /openapi.json,
+    /tools/openai.json, /tools/anthropic.json.
+  title: Health Connect API
+  version: "1.0"
+paths:
+  /analysis:
+    post:
+      consumes:
+      - application/json
+      description: Runs a Claude analysis over the daily summary and returns 3–4 specific
+        bullet-point insights. Defaults to yesterday if `date` is not provided. Use
+        this when the user wants commentary or interpretation rather than raw data.
+      operationId: analysis_run
+      parameters:
+      - description: Analysis request — date is optional and defaults to yesterday
+        in: body
+        name: body
+        schema:
+          $ref: '#/definitions/internal_analysis.AnalysisRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                $ref: '#/definitions/internal_analysis.AnalysisResponse'
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: Generate AI health insights for a day
+      tags:
+      - analysis
+  /apple-health/ingest:
+    post:
+      consumes:
+      - application/json
+      description: Accepts a HealthKit export payload (typically from a Shortcuts/Auto
+        Export script) and persists weight + vitals records. Use for backfilling or
+        scheduled pushes from a phone.
+      operationId: applehealth_ingest
+      parameters:
+      - description: HealthKit ingest payload
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/internal_applehealth.IngestPayload'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              records_added:
+                type: integer
+              status:
+                type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: Bulk-ingest Apple Health data
+      tags:
+      - apple-health
+  /apple-health/vitals:
+    get:
+      description: Returns vital sign readings (heart rate, resting HR, blood pressure,
+        etc.) for a metric across an optional date range.
+      operationId: applehealth_list_vitals
+      parameters:
+      - description: Metric name (e.g. heart_rate, resting_heart_rate, blood_pressure_systolic)
+        in: query
+        name: metric
+        type: string
+      - description: Start date (YYYY-MM-DD), inclusive
+        in: query
+        name: from
+        type: string
+      - description: End date (YYYY-MM-DD), inclusive
+        in: query
+        name: to
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/definitions/internal_applehealth.Vital'
+                type: array
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: List vital readings
+      tags:
+      - apple-health
+  /apple-health/weight:
+    get:
+      description: Returns weight readings (kg) and optional body composition fields
+        over an optional date range. Sourced from Apple Health, manual entries, or
+        InBody pushes.
+      operationId: applehealth_list_weight
+      parameters:
+      - description: Start date (YYYY-MM-DD), inclusive
+        in: query
+        name: from
+        type: string
+      - description: End date (YYYY-MM-DD), inclusive
+        in: query
+        name: to
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/definitions/internal_applehealth.WeightReading'
+                type: array
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: List weight readings
+      tags:
+      - apple-health
+    post:
+      consumes:
+      - application/json
+      description: Records a manual or device-sourced weight reading. Use this when
+        the user wants to log their weight or body composition.
+      operationId: applehealth_create_weight
+      parameters:
+      - description: Weight reading
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/internal_applehealth.CreateWeightRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            properties:
+              status:
+                type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: Log a weight reading
+      tags:
+      - apple-health
+  /hevy/workouts:
+    get:
+      description: 'Returns Hevy gym workouts (each with its sets) over an optional
+        date range. Use this for strength training questions: volume, sets, reps,
+        exercises lifted.'
+      operationId: hevy_list_workouts
+      parameters:
+      - description: Start date (YYYY-MM-DD), inclusive
+        in: query
+        name: from
+        type: string
+      - description: End date (YYYY-MM-DD), inclusive
+        in: query
+        name: to
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/definitions/internal_hevy.Workout'
+                type: array
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: List Hevy gym workouts
+      tags:
+      - hevy
+  /hevy/workouts/{id}:
+    get:
+      description: Returns a single gym workout with its full set list.
+      operationId: hevy_get_workout
+      parameters:
+      - description: Hevy workout numeric id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                $ref: '#/definitions/internal_hevy.Workout'
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: Get one Hevy workout by id
+      tags:
+      - hevy
+  /inbody/scans:
+    get:
+      description: Returns InBody scans (weight, body fat %, muscle mass, etc.) over
+        an optional date range. Use for body composition trends.
+      operationId: inbody_list_scans
+      parameters:
+      - description: Start date (YYYY-MM-DD), inclusive
+        in: query
+        name: from
+        type: string
+      - description: End date (YYYY-MM-DD), inclusive
+        in: query
+        name: to
+        type: string
+      - description: Maximum number of scans to return (newest first)
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/definitions/internal_inbody.BodyCompScan'
+                type: array
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: List InBody body composition scans
+      tags:
+      - inbody
+  /inbody/scans/latest:
+    get:
+      description: Returns the single most recent InBody body composition scan, or
+        404 if none exist.
+      operationId: inbody_get_latest_scan
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                $ref: '#/definitions/internal_inbody.BodyCompScan'
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: Get the most recent InBody scan
+      tags:
+      - inbody
+  /meals:
+    get:
+      description: 'Returns logged meals filtered by an exact date or a date range.
+        Use for nutrition questions: calories, macros, what was eaten on a date.'
+      operationId: meals_list
+      parameters:
+      - description: Exact day (YYYY-MM-DD)
+        in: query
+        name: date
+        type: string
+      - description: Start date (YYYY-MM-DD), inclusive — ignored if date is set
+        in: query
+        name: from
+        type: string
+      - description: End date (YYYY-MM-DD), inclusive — ignored if date is set
+        in: query
+        name: to
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/definitions/internal_meals.Meal'
+                type: array
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: List logged meals
+      tags:
+      - meals
+    post:
+      consumes:
+      - application/json
+      description: Creates a meal log entry. Use this when the user wants to record
+        what they ate.
+      operationId: meals_create
+      parameters:
+      - description: Meal log entry
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/internal_meals.CreateMealRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            properties:
+              id:
+                type: integer
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: Log a meal
+      tags:
+      - meals
+  /meals/{id}:
+    delete:
+      description: Removes a meal entry by id.
+      operationId: meals_delete
+      parameters:
+      - description: Meal id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              status:
+                type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: Delete a meal log entry
+      tags:
+      - meals
+  /oura/scores:
+    get:
+      description: Returns daily Oura scores (sleep, readiness, activity, HRV) over
+        a date range. Use this for trend questions or when the user asks for readiness/activity/sleep
+        scores.
+      operationId: oura_list_scores
+      parameters:
+      - description: Start date (YYYY-MM-DD), inclusive
+        in: query
+        name: from
+        type: string
+      - description: End date (YYYY-MM-DD), inclusive
+        in: query
+        name: to
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/definitions/internal_oura.DailyScore'
+                type: array
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: List Oura daily scores
+      tags:
+      - oura
+  /oura/scores/{day}:
+    get:
+      description: Returns the daily Oura score (sleep, readiness, activity) for one
+        calendar day.
+      operationId: oura_get_score_by_day
+      parameters:
+      - description: Calendar day (YYYY-MM-DD)
+        in: path
+        name: day
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                $ref: '#/definitions/internal_oura.DailyScore'
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: Get Oura scores for a specific day
+      tags:
+      - oura
+  /oura/sleep:
+    get:
+      description: Returns sleep sessions from the Oura Ring within an optional date
+        range and type filter. Use this when the user asks how they slept, sleep duration,
+        sleep stages, or HRV during sleep.
+      operationId: oura_list_sleep
+      parameters:
+      - description: Start date (YYYY-MM-DD), inclusive
+        in: query
+        name: from
+        type: string
+      - description: End date (YYYY-MM-DD), inclusive
+        in: query
+        name: to
+        type: string
+      - description: 'Sleep type filter: long, short, or nap'
+        in: query
+        name: type
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/definitions/internal_oura.SleepSession'
+                type: array
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: List Oura sleep sessions
+      tags:
+      - oura
+  /oura/sleep/{day}:
+    get:
+      description: Returns sleep sessions recorded for a single calendar day. Use
+        this when the user asks about a specific date's sleep.
+      operationId: oura_get_sleep_by_day
+      parameters:
+      - description: Calendar day (YYYY-MM-DD)
+        in: path
+        name: day
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/definitions/internal_oura.SleepSession'
+                type: array
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: Get Oura sleep for a specific day
+      tags:
+      - oura
+  /strava/activities:
+    get:
+      description: Returns Strava activities (runs, rides, swims) within an optional
+        date range and activity type filter. Use this for questions about workouts,
+        distance, pace, or cardio output.
+      operationId: strava_list_activities
+      parameters:
+      - description: Start date (YYYY-MM-DD), inclusive
+        in: query
+        name: from
+        type: string
+      - description: End date (YYYY-MM-DD), inclusive
+        in: query
+        name: to
+        type: string
+      - description: Activity type filter (e.g. Run, Ride, Swim, Walk)
+        in: query
+        name: type
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/definitions/internal_strava.Activity'
+                type: array
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: List Strava activities
+      tags:
+      - strava
+  /strava/activities/{id}:
+    get:
+      description: Returns full detail for one Strava activity including pace, heart
+        rate, and elevation if available.
+      operationId: strava_get_activity
+      parameters:
+      - description: Strava activity numeric id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                $ref: '#/definitions/internal_strava.Activity'
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: Get a single Strava activity by id
+      tags:
+      - strava
+  /summary/daily:
+    get:
+      description: Aggregates Oura, Strava, Hevy, InBody, Apple Health, and meals
+        into a single daily summary. Use this as the default starting point when the
+        user asks "how was my day" or "summarize my health on date X".
+      operationId: summary_daily
+      parameters:
+      - description: Exact day (YYYY-MM-DD)
+        in: query
+        name: date
+        type: string
+      - description: Start date (YYYY-MM-DD), inclusive — ignored if date is set
+        in: query
+        name: from
+        type: string
+      - description: End date (YYYY-MM-DD), inclusive — ignored if date is set
+        in: query
+        name: to
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/definitions/internal_summary.DailySummary'
+                type: array
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: Get daily cross-source summary
+      tags:
+      - summary
+  /summary/report:
+    get:
+      description: Returns a rolling-window report ending at `date` covering the past
+        `lookback` days (default 30). Use for "give me a report" requests.
+      operationId: summary_report
+      parameters:
+      - description: End date of the report (YYYY-MM-DD); defaults to today
+        in: query
+        name: date
+        type: string
+      - description: Number of days to look back from date (default 30)
+        in: query
+        name: lookback
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                $ref: '#/definitions/internal_summary.ReportData'
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: Get a multi-day health report
+      tags:
+      - summary
+  /summary/weekly:
+    get:
+      description: Returns weekly aggregates (averages and totals across sources).
+        Use this when the user asks for week-over-week trends.
+      operationId: summary_weekly
+      parameters:
+      - description: Start date (YYYY-MM-DD), inclusive
+        in: query
+        name: from
+        type: string
+      - description: End date (YYYY-MM-DD), inclusive
+        in: query
+        name: to
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/definitions/internal_summary.WeeklyTrend'
+                type: array
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: Get weekly trend aggregates
+      tags:
+      - summary
+  /sync/{source}:
+    post:
+      description: Forces a sync for the named source. Pass "all" to sync every registered
+        source. Use when the user wants their data refreshed before analysis.
+      operationId: sync_trigger
+      parameters:
+      - description: 'Source name: oura, strava, hevy, inbody, or all'
+        in: path
+        name: source
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              records_added:
+                type: integer
+              source:
+                type: string
+              status:
+                type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: Trigger an on-demand sync
+      tags:
+      - sync
+  /sync/status:
+    get:
+      description: Returns last successful sync timestamp, last status, and total
+        records added per source.
+      operationId: sync_status
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/definitions/internal_sync.SyncStatus'
+                type: array
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_new-marty_health-connect_internal_apperror.Response'
+      security:
+      - BearerAuth: []
+      summary: Get sync status per source
+      tags:
+      - sync
+securityDefinitions:
+  BearerAuth:
+    description: Bearer token. Set the same value in HEALTH_CONNECT_API_TOKEN on the
+      server.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

@@ -1,8 +1,8 @@
 # Binaries
 bin/
-server
-cli
-health
+/server
+/cli
+/health
 tmp/
 
 # Database
